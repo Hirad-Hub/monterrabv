@@ -10,8 +10,14 @@
 <body class="quote-page">
   <header class="quote-header">
     <a href="index.html" class="brand-link" aria-label="Monterra B.V. startpagina">
-      <img src="assets/optimized/monterra-logo.png" alt="Monterra B.V." class="brand-logo-img">
-      <span class="brand-name">Monterra B.V.</span>
+      <picture>
+        <source srcset="assets/optimized/monterra-logo.webp" type="image/webp">
+        <img src="assets/optimized/monterra-logo.png" alt="Monterra B.V. logo" class="brand-logo-img">
+      </picture>
+      <div class="brand-text-block">
+        <span class="brand-name">Monterra B.V.</span>
+        <span class="brand-tagline-small">Vakmensen voor de buitenruimte</span>
+      </div>
     </a>
     <a href="index.html#contact" class="quote-back-link">Terug naar de website</a>
   </header>
@@ -85,6 +91,53 @@
       <div><strong>Uw aanvraagstatus</strong><br><span class="quote-confirmation-message">Uw e-mailprogramma is geopend met uw aanvraag. Verstuur de e-mail daar om uw gegevens bij Monterra af te leveren.</span></div>
     </div>
   </main>
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <picture>
+            <source srcset="assets/optimized/monterra-logo.webp" type="image/webp">
+            <img src="assets/optimized/monterra-logo.png" alt="Monterra B.V." style="height: 48px; width: auto;">
+          </picture>
+          <p>Duurzaam inrichten voor een prettige leefomgeving. Specialist in montage, installatie en toezicht van openbare buitenruimtes.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigatie</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#home">Start</a></li>
+            <li><a href="index.html#diensten">Wat doen wij voor u?</a></li>
+            <li><a href="index.html#projecten">Recente projecten</a></li>
+            <li><a href="index.html#over-ons">Wie zijn wij?</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Specialisaties</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#diensten">Sport- en speeltoestellen</a></li>
+            <li><a href="index.html#diensten">Fietsparkeersystemen</a></li>
+            <li><a href="index.html#diensten">Overkappingen</a></li>
+            <li><a href="index.html#diensten">Circulaire productvervanging</a></li>
+            <li><a href="index.html#diensten">Projectbegeleiding</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contactgegevens</h4>
+          <ul class="footer-links">
+            <li><a href="tel:+31646175385">+31 (0) 6 46 17 53 85</a></li>
+            <li><a href="mailto:info@monterrabv.nl">info@monterrabv.nl</a></li>
+            <li><span>Waterbieskreek 15</span></li>
+            <li><span>2353 JE Leiderdorp</span></li>
+            <li><a href="https://www.instagram.com/monterrabv/" target="_blank" rel="noopener noreferrer" style="color: var(--color-primary); font-weight: 700;">@monterrabv op Instagram ↗</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>Copyright © 2026 Monterra B.V. • Alle rechten voorbehouden.</div>
+        <div>Duurzaam inrichten voor een prettige leefomgeving</div>
+      </div>
+    </div>
+  </footer>
   <script>
     document.getElementById('quoteForm').addEventListener('submit', function (event) {
       event.preventDefault();
