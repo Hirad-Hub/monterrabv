@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Vraag een offerte of advies aan bij Monterra B.V.">
+  <title>Offerte of advies aanvragen | Monterra B.V.</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="quote-page">
+  <header class="quote-header">
+    <a href="index.html" class="brand-link" aria-label="Monterra B.V. startpagina">
+      <img src="assets/optimized/monterra-logo.png" alt="Monterra B.V." class="brand-logo-img">
+      <span class="brand-name">Monterra B.V.</span>
+    </a>
+    <a href="index.html#contact" class="quote-back-link">Terug naar de website</a>
+  </header>
+  <main class="quote-main">
+    <div class="quote-intro">
+      <span class="section-tag tag-orange">Offerte & advies</span>
+      <h1>Vertel ons over uw plannen</h1>
+      <p>Beschrijf wat u nodig heeft. We bekijken uw aanvraag en nemen contact met u op om de mogelijkheden en een passende offerte te bespreken.</p>
+    </div>
+    <section class="contact-form-box quote-form-box" aria-labelledby="quoteFormTitle">
+      <h2 id="quoteFormTitle">Uw aanvraag</h2>
+      <p>Velden met een sterretje zijn verplicht.</p>
+      <form id="quoteForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="quoteName" class="form-label">Uw naam *</label>
+            <input type="text" id="quoteName" class="form-control" placeholder="Bijv. Jan de Vries" autocomplete="name" required>
+          </div>
+          <div class="form-group">
+            <label for="quoteEmail" class="form-label">Uw e-mailadres *</label>
+            <input type="email" id="quoteEmail" class="form-control" placeholder="naam@bedrijf.nl" autocomplete="email" required>
+          </div>
+          <div class="form-group full-width">
+            <label for="quotePhone" class="form-label">Telefoonnummer (optioneel)</label>
+            <input type="tel" id="quotePhone" class="form-control" placeholder="+31 6 12345678" autocomplete="tel">
+            <div class="form-consent-inline"><input type="checkbox" id="quoteCallConsent" checked><label for="quoteCallConsent">Ik geef Monterra B.V. toestemming om mij hierover te bellen.</label></div>
+          </div>
+          <div class="form-group">
+            <label for="quoteService" class="form-label">Welke dienst heeft u nodig?</label>
+            <select id="quoteService" class="form-control">
+              <option>Montage & installatie</option>
+              <option>Circulair en duurzaam vervangen</option>
+              <option>Projectbegeleiding en planning</option>
+              <option>Onderhoudscontroles</option>
+              <option>Anders, graag in overleg</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="quoteCategory" class="form-label">Om welke producten gaat het?</label>
+            <select id="quoteCategory" class="form-control">
+              <option>Speel- en sporttoestellen</option>
+              <option>Overkappingen en shelters</option>
+              <option>Fietsparkeren</option>
+              <option>Straatmeubilair</option>
+              <option>Anders, graag in overleg</option>
+            </select>
+          </div>
+          <div class="form-group full-width">
+            <label for="quoteMessage" class="form-label">Uw wensen en projectgegevens *</label>
+            <textarea id="quoteMessage" class="form-control" placeholder="Vertel ons bijvoorbeeld over de locatie, gewenste werkzaamheden, aantallen en planning." required></textarea>
+          </div>
+        </div>
+        <div class="form-submit-row">
+          <span class="form-privacy-note">Uw gegevens gebruiken wij alleen om contact met u op te nemen over deze aanvraag.</span>
+          <button type="submit" class="btn-primary"><span>Offerte aanvragen</span><span aria-hidden="true">→</span></button>
+        </div>
+      </form>
+    </section>
+    <div id="quoteConfirmation" class="quote-confirmation" role="status" aria-live="polite" hidden>
+      <span class="quote-confirmation-icon" aria-hidden="true">✓</span>
+      <div><strong>Uw aanvraag staat klaar.</strong><br>Uw e-mailprogramma is geopend met uw aanvraag. Verstuur de e-mail daar om uw gegevens bij Monterra af te leveren.</div>
+    </div>
+  </main>
+  <script>
+    document.getElementById('quoteForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const value = (id) => document.getElementById(id).value.trim();
+      const name = value('quoteName');
+      const email = value('quoteEmail');
+      const phone = value('quotePhone') || 'Niet opgegeven';
+      const service = value('quoteService');
+      const category = value('quoteCategory');
+      const consent = document.getElementById('quoteCallConsent').checked ? 'Ja' : 'Nee';
+      const message = value('quoteMessage');
+      const subject = encodeURIComponent('Offerteaanvraag via de website');
+      const body = encodeURIComponent(`Naam: ${name}\nE-mailadres: ${email}\nTelefoonnummer: ${phone}\nToestemming om te bellen: ${consent}\nDienst: ${service}\nProductcategorie: ${category}\n\nWensen en projectgegevens:\n${message}`);
+      window.location.href = `mailto:info@monterrabv.nl?subject=${subject}&body=${body}`;
+      document.getElementById('quoteConfirmation').hidden = false;
+      document.getElementById('quoteConfirmation').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  </script>
+</body>
+</html>
