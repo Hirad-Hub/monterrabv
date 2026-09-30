@@ -1924,6 +1924,16 @@ textarea.form-control {
 .quote-form-box h2 { font-size: 1.5rem; margin-bottom: 8px; }
 .quote-form-box > p { margin-bottom: 24px; color: var(--color-text-muted); }
 .quote-form-box .form-submit-row { margin-top: 22px; }
+.form-file-picker { display: flex; align-items: center; gap: 14px; min-height: 54px; padding: 8px 12px; border: 1px solid var(--color-surface-border); border-radius: var(--radius-sm); background: #FFFFFF; }
+.form-file-input { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); border: 0; }
+.form-file-button { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 8px 16px; border-radius: var(--radius-full); background: var(--color-secondary-light); color: var(--color-secondary); font-size: 0.875rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.form-file-input:focus-visible + .form-file-button { outline: 3px solid var(--color-secondary); outline-offset: 2px; }
+.form-file-names { min-width: 0; overflow: hidden; color: var(--color-text-body); font-size: 0.875rem; text-overflow: ellipsis; white-space: nowrap; }
+.quote-image-preview { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; margin-top: 14px; }
+.quote-image-count { grid-column: 1 / -1; color: var(--color-secondary); font-size: 0.85rem; font-weight: 700; }
+.quote-image-item { min-width: 0; overflow: hidden; border: 1px solid var(--color-surface-border); border-radius: var(--radius-sm); background: #FFFFFF; }
+.quote-image-item img { display: block; width: 100%; height: 88px; object-fit: cover; }
+.quote-image-item span { display: block; overflow: hidden; padding: 6px 8px; color: var(--color-text-body); font-size: 0.72rem; text-overflow: ellipsis; white-space: nowrap; }
 .quote-confirmation { display: flex; gap: 14px; margin-top: 20px; padding: 18px; border-left: 4px solid #22c55e; border-radius: var(--radius-sm); background: #effaf2; color: var(--color-text-body); line-height: 1.55; }
 .quote-confirmation[hidden] { display: none; }
 .quote-confirmation-icon { display: grid; place-items: center; width: 28px; height: 28px; flex: 0 0 28px; border-radius: 50%; color: #fff; background: #22c55e; font-weight: 800; }

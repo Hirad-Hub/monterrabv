@@ -63,6 +63,16 @@
             <label for="quoteMessage" class="form-label">Uw wensen en projectgegevens *</label>
             <textarea id="quoteMessage" class="form-control" placeholder="Vertel ons bijvoorbeeld over de locatie, gewenste werkzaamheden, aantallen en planning." required></textarea>
           </div>
+          <div class="form-group full-width">
+            <label for="quoteImages" class="form-label">Foto's van de locatie of situatie (optioneel)</label>
+            <div class="form-file-picker">
+              <input type="file" id="quoteImages" class="form-file-input" accept="image/*" multiple>
+              <label for="quoteImages" class="form-file-button">Afbeeldingen kiezen</label>
+              <span id="quoteImageFileNames" class="form-file-names">Geen afbeeldingen gekozen</span>
+            </div>
+            <span class="form-privacy-note">U kunt meerdere afbeeldingen kiezen. Voeg geen vertrouwelijke gegevens toe.</span>
+            <div id="quoteImagePreview" class="quote-image-preview" aria-live="polite"></div>
+          </div>
         </div>
         <div class="form-submit-row">
           <span class="form-privacy-note">Uw gegevens gebruiken wij alleen om contact met u op te nemen over deze aanvraag.</span>
@@ -72,7 +82,7 @@
     </section>
     <div id="quoteConfirmation" class="quote-confirmation" role="status" aria-live="polite" hidden>
       <span class="quote-confirmation-icon" aria-hidden="true">✓</span>
-      <div><strong>Uw aanvraag staat klaar.</strong><br>Uw e-mailprogramma is geopend met uw aanvraag. Verstuur de e-mail daar om uw gegevens bij Monterra af te leveren.</div>
+      <div><strong>Uw aanvraagstatus</strong><br><span class="quote-confirmation-message">Uw e-mailprogramma is geopend met uw aanvraag. Verstuur de e-mail daar om uw gegevens bij Monterra af te leveren.</span></div>
     </div>
   </main>
   <script>
@@ -86,11 +96,56 @@
       const category = value('quoteCategory');
       const consent = document.getElementById('quoteCallConsent').checked ? 'Ja' : 'Nee';
       const message = value('quoteMessage');
+      const files = Array.from(document.getElementById('quoteImages').files);
+      const attachmentList = files.length ? files.map((file) => `- ${file.name}`).join('\n') : 'Geen';
       const subject = encodeURIComponent('Offerteaanvraag via de website');
-      const body = encodeURIComponent(`Naam: ${name}\nE-mailadres: ${email}\nTelefoonnummer: ${phone}\nToestemming om te bellen: ${consent}\nDienst: ${service}\nProductcategorie: ${category}\n\nWensen en projectgegevens:\n${message}`);
-      window.location.href = `mailto:info@monterrabv.nl?subject=${subject}&body=${body}`;
-      document.getElementById('quoteConfirmation').hidden = false;
-      document.getElementById('quoteConfirmation').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      const body = `Naam: ${name}\nE-mailadres: ${email}\nTelefoonnummer: ${phone}\nToestemming om te bellen: ${consent}\nDienst: ${service}\nProductcategorie: ${category}\n\nWensen en projectgegevens:\n${message}\n\nGeselecteerde afbeeldingen:\n${attachmentList}`;
+      const showConfirmation = (text) => {
+        const confirmation = document.getElementById('quoteConfirmation');
+        confirmation.querySelector('.quote-confirmation-message').textContent = text;
+        confirmation.hidden = false;
+        confirmation.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      };
+      if (files.length && navigator.canShare && navigator.canShare({ files }) && navigator.share) {
+        navigator.share({ files, title: 'Offerteaanvraag Monterra B.V.', text: body })
+          .then(() => showConfirmation('Uw aanvraag en afbeeldingen zijn gedeeld.'))
+          .catch((error) => {
+            if (error.name !== 'AbortError') showConfirmation('Het delen is niet gelukt. Kies uw afbeeldingen opnieuw of neem contact met ons op via info@monterrabv.nl.');
+          });
+      } else {
+        const imageNote = files.length ? '\n\nVoeg de geselecteerde afbeeldingen handmatig toe aan de e-mail.' : '';
+        window.location.href = `mailto:info@monterrabv.nl?subject=${subject}&body=${encodeURIComponent(body + imageNote)}`;
+        showConfirmation(files.length
+          ? 'Uw e-mailprogramma is geopend. Voeg de geselecteerde afbeeldingen handmatig toe aan de e-mail voordat u deze verstuurt.'
+          : 'Uw e-mailprogramma is geopend met uw aanvraag. Verstuur de e-mail daar om uw aanvraag bij Monterra af te leveren.');
+      }
+    });
+    document.getElementById('quoteImages').addEventListener('change', function () {
+      const preview = document.getElementById('quoteImagePreview');
+      const fileNames = document.getElementById('quoteImageFileNames');
+      preview.replaceChildren();
+      const files = Array.from(this.files);
+      fileNames.textContent = files.length
+        ? `${files.length} afbeelding${files.length === 1 ? '' : 'en'} gekozen`
+        : 'Geen afbeeldingen gekozen';
+      files.forEach((file) => {
+        if (!file.type.startsWith('image/')) return;
+        const card = document.createElement('div');
+        card.className = 'quote-image-item';
+        const image = document.createElement('img');
+        image.src = URL.createObjectURL(file);
+        image.alt = `Voorbeeld van ${file.name}`;
+        const caption = document.createElement('span');
+        caption.textContent = file.name;
+        card.append(image, caption);
+        preview.append(card);
+      });
+      if (files.length) {
+        const summary = document.createElement('p');
+        summary.className = 'quote-image-count';
+        summary.textContent = `${files.length} afbeelding${files.length === 1 ? '' : 'en'} geselecteerd.`;
+        preview.prepend(summary);
+      }
     });
   </script>
 </body>
